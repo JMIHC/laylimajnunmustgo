@@ -1,0 +1,34 @@
+name: Import avatars
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-avatars.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download portraits from live deploy
+        run: |
+          set -euo pipefail
+          mkdir -p public/avatars
+          base="https://6a8fb645d8613ac6e0b3dfc6--laylimajnunmustgo.netlify.app/avatars"
+          for name in depo cart broadcast hearing agency scopist instructor trial courtadmin paralegal legaltrans expert cs asr access health techwriter ea speaker; do
+            echo "fetch $name"
+            curl -fsSL "$base/$name.png" -o "public/avatars/$name.png"
+            file "public/avatars/$name.png" | grep -q PNG
+          done
+      - name: Commit portraits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/avatars/*.png
+          git diff --cached --quiet && echo "nothing to commit" && exit 0
+          git commit -m "Add role avatar portraits"
+          git push
