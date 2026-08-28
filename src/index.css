@@ -14,7 +14,7 @@
 }
 
 * { box-sizing: border-box; }
-html { background: var(--paper); overflow-x: hidden; }
+html { background: var(--paper); }
 body {
   margin: 0;
   color: var(--ink);
@@ -260,6 +260,8 @@ footer .stamp {
   margin-bottom: 12px;
 }
 
+html { overflow-x: hidden; }
+
 @media (max-width: 640px) {
   .wrap { padding: 0 16px; }
   header { padding: 28px 0 16px; }
@@ -293,3 +295,45 @@ footer .stamp {
   .avatar .cue { transition: none; }
   .card:hover { transform: none; }
 }
+
+.login-page { min-height: 100vh; padding-bottom: 64px; }
+.login-kicker {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 56px 0 0;
+}
+.google-btn {
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--page);
+  color: var(--ink);
+  font: 600 16px var(--font-ui);
+  padding: 14px 22px;
+  cursor: pointer;
+  margin-top: 28px;
+}
+.google-btn:hover { background: var(--ink); color: var(--page); }
+.login-status,
+.login-msg {
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  margin-top: 20px;
+}
+.login-msg { color: var(--stamp); }
+.sign-out {
+  appearance: none;
+  display: block;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin-top: 16px;
+  font: inherit;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.sign-out:hover { color: var(--ink); }
+.sign-out:disabled { cursor: wait; }
