@@ -34,6 +34,6 @@ export function jobLinksFor(role: Role, city: City): { label: string; href: stri
   const location = city.id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
   return [
     linkedIn,
-    { label: "Job Bank", href: jobBankSearch(query, location) },
+    { label: "Job Bank (outside Canada)", href: jobBankSearch(query, location) },
   ];
 }

@@ -30,5 +30,6 @@ describe("job board searches", () => {
     const bank = jobBankSearch('"deposition reporter"', "Victoria, BC");
     expect(bank.startsWith("https://www.jobbank.gc.ca/jobsearch/jobsearch")).toBe(true);
     expect(bank).toContain("Victoria");
+    expect(bank).toContain("fsrc=32");
   });
 });

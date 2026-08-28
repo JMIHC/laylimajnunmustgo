@@ -19,6 +19,7 @@ describe("job search urls", () => {
     const bank = jobBankSearch("court reporter", "Vancouver, BC");
     expect(bank.startsWith("https://www.jobbank.gc.ca/jobsearch/jobsearch")).toBe(true);
     expect(bank).toContain("Vancouver");
+    expect(bank).toContain("fsrc=32");
   });
 });
 
@@ -35,15 +36,16 @@ describe("jobLinksFor", () => {
     }
   });
 
-  it("pairs Vancouver and Victoria with LinkedIn jobs and Job Bank", () => {
+  it("pairs Vancouver and Victoria with LinkedIn jobs and Job Bank for foreign candidates", () => {
     for (const id of ["vancouver", "victoria"] as const) {
       const city = cityById(id);
       const links = jobLinksFor(sample, city);
-      expect(links.map((l) => l.label)).toEqual(["LinkedIn jobs", "Job Bank"]);
+      expect(links.map((l) => l.label)).toEqual(["LinkedIn jobs", "Job Bank (outside Canada)"]);
       for (const link of links) {
         expect(link.href.startsWith("https://")).toBe(true);
         expect(link.href).toContain(city.label.split(",")[0]);
       }
+      expect(links[1]?.href).toContain("fsrc=32");
     }
   });
 
