@@ -202,6 +202,97 @@ const SCENES: Record<string, Scene> = {
     front: () =>
       `<path d="M58 200 L66 160 H134 L142 200Z" fill="${WOOD}"/><rect x="62" y="156" width="76" height="8" rx="2" fill="${WOOD2}"/><path d="M122 156 Q128 142 116 134" ${S(INK, 3)}/><ellipse cx="114" cy="132" rx="5" ry="7" transform="rotate(-35 114 132)" fill="${INK}"/><circle cx="22" cy="190" r="14" fill="${INK}"/><circle cx="178" cy="190" r="14" fill="${INK}"/><circle cx="48" cy="200" r="14" fill="${INK}"/><circle cx="152" cy="200" r="14" fill="${INK}"/>`,
   },
+  voice: {
+    back: (c) => monitor(8, 26, 86, 60, wave(c) + lines(10, 36, [60, 48, 56], "#4A5563", 7)),
+    gear: () => headset(true),
+    front: () => desk() + keyboard(),
+  },
+  event: {
+    back: () =>
+      monitor(108, 18, 84, 58, lines(10, 12, [60, 44, 52], "#fff", 7, 2.5), "#8FB3D9") +
+      `<g transform="translate(16 28)">${[0, 1, 2].map((i) => `<circle cx="${10 + i * 18}" cy="10" r="7" fill="${["#C68642", "#8D5524", "#E0AC69"][i]}"/>`).join("")}</g>`,
+    front: () => steno(100, 160),
+  },
+  video: {
+    back: () =>
+      `<g transform="translate(14 22)"><rect width="48" height="32" rx="4" fill="${INK}"/><rect x="5" y="5" width="28" height="22" rx="2" fill="${SCREEN}"/><circle cx="19" cy="16" r="6" fill="#4A5563"/><circle cx="19" cy="16" r="3" fill="${INK}"/><rect x="38" y="11" width="8" height="10" rx="1" fill="${INK}"/></g>`,
+    front: () => desk() + laptop(118, 105, lines(8, 10, [40, 28], GRAY, 7)),
+  },
+  catsoft: {
+    back: (c) =>
+      monitor(
+        8,
+        22,
+        90,
+        62,
+        `<text x="10" y="18" font-size="8" font-family="${MONO}" fill="${c}">STKPWHRAO</text>` +
+          lines(10, 26, [64, 52, 60, 40], "#4A5563", 7),
+      ),
+    front: () => desk() + steno(118, 158, false),
+  },
+  legalops: {
+    back: (c) => {
+      let g = "";
+      for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < 6; i++) {
+          g += `<rect x="${4 + i * 11}" y="${16 + j * 12}" width="9" height="9" fill="${(i + j) % 3 === 0 ? c : "none"}" fill-opacity=".7" stroke="#C9D0D8" stroke-width="1"/>`;
+        }
+      }
+      return `<g transform="translate(12 18)"><rect width="74" height="58" rx="3" fill="${PAPER}"/><rect width="74" height="12" rx="3" fill="${c}"/>${g}</g>`;
+    },
+    front: () => desk() + laptop(118, 105, lines(8, 10, [40, 30], GRAY, 7)),
+  },
+  lawlib: {
+    back: (c) => {
+      const cols = [c, "#B57B4A", "#8A96A3", c, "#B23A2E"];
+      let b = "";
+      for (let i = 0; i < 10; i++) {
+        const col = cols[i % 5] ?? c;
+        b += `<rect x="${14 + i * 17}" y="${20 + (i % 3) * 3}" width="14" height="${64 - (i % 3) * 3}" rx="1.5" fill="${col}"/>`;
+      }
+      return b + `<rect x="10" y="86" width="180" height="6" fill="${WOOD2}"/>`;
+    },
+    front: () =>
+      desk() +
+      `<g transform="translate(22 118)"><rect width="48" height="38" rx="2" fill="${PAPER}"/>${lines(6, 8, [36, 30, 34], GRAY, 8)}</g>`,
+  },
+  foia: {
+    back: () =>
+      `<g transform="translate(16 18)"><rect width="72" height="64" rx="2" fill="${PAPER}" stroke="#C9D0D8"/>${lines(8, 10, [52, 46, 50], GRAY, 8)}<rect x="8" y="38" width="44" height="8" fill="${INK}"/></g>`,
+    front: () => desk() + laptop(114, 105, lines(8, 10, [40, 28, 36], GRAY, 7)),
+  },
+  contract: {
+    back: (c) =>
+      `<g transform="translate(118 16)"><rect width="66" height="70" rx="2" fill="${PAPER}" stroke="#C9D0D8"/>${lines(8, 10, [48, 42, 50], GRAY, 8)}<rect x="30" y="48" width="24" height="14" rx="1" fill="${c}"/></g>`,
+    front: () => desk() + keyboard(),
+  },
+  rim: {
+    back: (c) =>
+      `<g transform="translate(12 22)">${[0, 1, 2]
+        .map(
+          (i) =>
+            `<rect x="${i * 26}" y="${6 + (i % 2) * 4}" width="22" height="48" rx="2" fill="${i === 1 ? c : WOOD}"/><rect x="${4 + i * 26}" y="${12 + (i % 2) * 4}" width="14" height="6" fill="${PAPER}"/>`,
+        )
+        .join("")}</g>`,
+    front: () => desk() + laptop(118, 105, lines(8, 10, [36, 28], GRAY, 7)),
+  },
+  oralhist: {
+    back: (c) => monitor(106, 20, 84, 58, wave(c) + lines(8, 36, [58, 44], "#4A5563", 7)),
+    gear: () => headset(true),
+    front: () =>
+      desk() +
+      `<rect x="24" y="156" width="36" height="22" rx="4" fill="${INK}"/><circle cx="42" cy="167" r="6" fill="${PAPER}"/>`,
+  },
+  claims: {
+    back: (c) =>
+      `<g transform="translate(14 18)"><rect width="76" height="62" rx="2" fill="${PAPER}"/>${lines(8, 10, [56, 48, 54], GRAY, 8)}<rect x="8" y="40" width="26" height="10" rx="2" fill="${c}"/></g>`,
+    front: () => desk() + laptop(114, 105, lines(8, 10, [40, 30, 36], GRAY, 7)),
+  },
+  grant: {
+    back: (c) =>
+      `<g transform="translate(12 16)"><rect width="94" height="68" rx="3" fill="${PAPER}" stroke="#C9D0D8"/>${lines(10, 14, [68, 62, 70, 48], GRAY, 8)}<rect x="10" y="8" width="34" height="5" rx="2" fill="${c}"/></g>`,
+    front: () => desk() + laptop(116, 105, lines(8, 10, [40, 28, 42], GRAY, 7)),
+  },
 };
 
 export function avatarSVG(role: Role, color: string): string {
