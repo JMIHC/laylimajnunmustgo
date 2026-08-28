@@ -1,3 +1,5 @@
+import { SignOut } from "./SignOut";
+
 export function SiteFooter() {
   return (
     <footer>
@@ -8,6 +10,7 @@ export function SiteFooter() {
         use LinkedIn&apos;s own boolean keyword syntax and a United States location filter;
         refine with the &quot;Current company&quot; and &quot;Locations&quot; filters once the page opens.
       </p>
+      <SignOut />
     </footer>
   );
 }
