@@ -17,6 +17,15 @@ function linkedInLocation(id: City["id"]): string {
   }
 }
 
+/** Indeed in Monterey; Job Bank (title query) in Vancouver / Victoria. */
+export function primaryJobHref(role: Role, city: City): string {
+  if (city.id === "monterey") {
+    return indeedJobsSearch(role.title, "Monterey, CA");
+  }
+  const location = city.id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
+  return jobBankSearch(role.title, location);
+}
+
 export function jobLinksFor(role: Role, city: City): { label: string; href: string }[] {
   const query = jobQuery(role);
   const linkedIn = {
@@ -34,6 +43,6 @@ export function jobLinksFor(role: Role, city: City): { label: string; href: stri
   const location = city.id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
   return [
     linkedIn,
-    { label: "Job Bank (outside Canada)", href: jobBankSearch(query, location) },
+    { label: "Job Bank (outside Canada)", href: jobBankSearch(role.title, location) },
   ];
 }

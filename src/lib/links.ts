@@ -25,6 +25,7 @@ export function jobBankSearch(query: string, location: string): string {
     searchstring: query,
     locationstring: location,
     fsrc: "32",
+    fna: "1",
   });
   return `https://www.jobbank.gc.ca/jobsearch/jobsearch?${params.toString()}`;
 }

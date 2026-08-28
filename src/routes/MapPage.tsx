@@ -1,14 +1,12 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router";
 import { MapView } from "../components/MapView";
 import { SiteFooter } from "../components/SiteFooter";
 import { SiteNav } from "../components/SiteNav";
 import { CITIES } from "../data/cities";
 import { ROLES } from "../data/roles";
 import type { CityId } from "../data/types";
-import { jobLinksFor } from "../lib/jobs";
+import { jobLinksFor, primaryJobHref } from "../lib/jobs";
 import { rolesForCity } from "../lib/markets";
-import { slugFromTitle } from "../lib/slug";
 
 export function MapPage() {
   const [cityId, setCityId] = useState<CityId | null>(null);
@@ -54,7 +52,13 @@ export function MapPage() {
                 <ul className="map-roles">
                   {roles.map((role) => (
                     <li key={role.title}>
-                      <Link to={`/role/${slugFromTitle(role.title)}`}>{role.title}</Link>
+                      <a
+                        href={primaryJobHref(role, city)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {role.title}
+                      </a>
                       <span>{role.mode}</span>
                       <p className="map-jobs">
                         {jobLinksFor(role, city).map((job) => (
