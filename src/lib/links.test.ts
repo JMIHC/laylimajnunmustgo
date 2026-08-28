@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { indeedJobsSearch, jobBankSearch, linkedinJobsSearch, linkedinPeopleSearch, webSearch } from "./links";
+import { indeedCanadaJobsSearch, indeedJobsSearch, jobBankSearch, linkedinJobsSearch, linkedinPeopleSearch, webSearch } from "./links";
 
 describe("search links", () => {
   it("uses LinkedIn people search with US geoUrn", () => {
@@ -31,5 +31,10 @@ describe("job board searches", () => {
     expect(bank.startsWith("https://www.jobbank.gc.ca/jobsearch/jobsearch")).toBe(true);
     expect(bank).toContain("Victoria");
     expect(bank).toContain("fsrc=32");
+
+    const ca = indeedCanadaJobsSearch("access to information", "Vancouver, BC");
+    expect(ca.startsWith("https://ca.indeed.com/jobs")).toBe(true);
+    expect(ca).toContain("Vancouver");
+    expect(new URL(ca).searchParams.get("q")).toBe("access to information");
   });
 });

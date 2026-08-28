@@ -20,6 +20,11 @@ export function indeedJobsSearch(query: string, location: string): string {
   return `https://www.indeed.com/jobs?${params.toString()}`;
 }
 
+export function indeedCanadaJobsSearch(query: string, location: string): string {
+  const params = new URLSearchParams({ q: query, l: location });
+  return `https://ca.indeed.com/jobs?${params.toString()}`;
+}
+
 export function jobBankSearch(query: string, location: string): string {
   const params = new URLSearchParams({
     searchstring: query,

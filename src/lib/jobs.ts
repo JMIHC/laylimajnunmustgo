@@ -1,6 +1,7 @@
 import type { City } from "../data/cities";
+import { agenciesForCity, OFFICIAL_REPORTERS_HREF, type AgencyLink } from "../data/agencies";
 import type { Role } from "../data/types";
-import { indeedJobsSearch, jobBankSearch, linkedinJobsSearch } from "./links";
+import { indeedCanadaJobsSearch, indeedJobsSearch, linkedinJobsSearch } from "./links";
 
 function jobQuery(role: Role): string {
   return role.li;
@@ -53,7 +54,7 @@ const CANADA_JOB_QUERY: Record<string, string> = {
 
 const CANADA_JOB_FALLBACK = "court reporting agency";
 
-/** Canadian employer / place phrase for Job Bank — never the US title. */
+/** Canadian employer / place phrase for Indeed Canada — never the US title. */
 export function canadaJobQuery(role: Role): string {
   return CANADA_JOB_QUERY[role.scene] ?? CANADA_JOB_FALLBACK;
 }
@@ -62,33 +63,42 @@ function canadaLocation(id: City["id"]): string {
   return id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
 }
 
-/** Indeed in Monterey; Job Bank (Canadian employer query) in Vancouver / Victoria. */
+export function isReportingRole(role: Role): boolean {
+  return role.g === "steno";
+}
+
+/** Indeed US in Monterey; official reporters or Indeed Canada in Vancouver / Victoria. */
 export function primaryJobHref(role: Role, city: City): string {
   if (city.id === "monterey") {
     return indeedJobsSearch(role.title, "Monterey, CA");
   }
-  return jobBankSearch(canadaJobQuery(role), canadaLocation(city.id));
+  if (isReportingRole(role)) {
+    return OFFICIAL_REPORTERS_HREF;
+  }
+  return indeedCanadaJobsSearch(canadaJobQuery(role), canadaLocation(city.id));
 }
 
-export function jobLinksFor(role: Role, city: City): { label: string; href: string }[] {
-  const query = jobQuery(role);
-  const linkedIn = {
-    label: "LinkedIn jobs",
-    href: linkedinJobsSearch(query, linkedInLocation(city.id)),
-  };
-
+export function jobLinksFor(role: Role, city: City): AgencyLink[] {
   if (city.id === "monterey") {
+    const query = jobQuery(role);
     return [
-      linkedIn,
+      { label: "LinkedIn jobs", href: linkedinJobsSearch(query, linkedInLocation(city.id)) },
       { label: "Indeed", href: indeedJobsSearch(query, "Monterey, CA") },
     ];
   }
 
+  if (isReportingRole(role)) {
+    return agenciesForCity(city.id);
+  }
+
   return [
-    linkedIn,
     {
-      label: "Job Bank (outside Canada)",
-      href: jobBankSearch(canadaJobQuery(role), canadaLocation(city.id)),
+      label: "LinkedIn jobs",
+      href: linkedinJobsSearch(jobQuery(role), linkedInLocation(city.id)),
+    },
+    {
+      label: "Indeed",
+      href: indeedCanadaJobsSearch(canadaJobQuery(role), canadaLocation(city.id)),
     },
   ];
 }
