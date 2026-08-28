@@ -5,14 +5,25 @@ import { RoleCard } from "../components/RoleCard";
 import { SiteFooter } from "../components/SiteFooter";
 import { GROUP_ORDER, GROUPS } from "../data/groups";
 import { ROLES } from "../data/roles";
+import type { DeckId } from "../data/types";
 import { filterRoles, type GroupFilter } from "../lib/filter";
 
 export function Home() {
+  const [deck, setDeck] = useState<DeckId>("next");
   const [group, setGroup] = useState<GroupFilter>("all");
   const [remoteOnly, setRemoteOnly] = useState(false);
 
-  const shown = useMemo(() => filterRoles(ROLES, group, remoteOnly), [group, remoteOnly]);
+  const deckRoles = useMemo(() => ROLES.filter((r) => r.deck === deck), [deck]);
+  const shown = useMemo(
+    () => filterRoles(ROLES, deck, group, remoteOnly),
+    [deck, group, remoteOnly],
+  );
   const shownSet = useMemo(() => new Set(shown), [shown]);
+
+  function handleDeck(next: DeckId) {
+    setDeck(next);
+    setGroup("all");
+  }
 
   return (
     <div className="wrap">
@@ -37,10 +48,12 @@ export function Home() {
       </header>
 
       <Filters
+        deck={deck}
         group={group}
         remoteOnly={remoteOnly}
         shown={shown.length}
-        total={ROLES.length}
+        total={deckRoles.length}
+        onDeck={handleDeck}
         onGroup={setGroup}
         onRemote={setRemoteOnly}
       />
@@ -48,7 +61,7 @@ export function Home() {
       <main>
         {GROUP_ORDER.map((key) => {
           const meta = GROUPS[key];
-          const roles = ROLES.filter((r) => r.g === key && shownSet.has(r));
+          const roles = deckRoles.filter((r) => r.g === key && shownSet.has(r));
           if (roles.length === 0) return null;
           return (
             <section key={key}>
