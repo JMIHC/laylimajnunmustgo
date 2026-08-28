@@ -5,7 +5,7 @@ import { SiteNav } from "../components/SiteNav";
 import { CITIES } from "../data/cities";
 import { ROLES } from "../data/roles";
 import type { CityId } from "../data/types";
-import { jobLinksFor, primaryJobHref } from "../lib/jobs";
+import { jobLinksFor } from "../lib/jobs";
 import { rolesForCity } from "../lib/markets";
 
 export function MapPage() {
@@ -52,13 +52,7 @@ export function MapPage() {
                 <ul className="map-roles">
                   {roles.map((role) => (
                     <li key={role.title}>
-                      <a
-                        href={primaryJobHref(role, city)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {role.title}
-                      </a>
+                      <span>{role.title}</span>
                       <span>{role.mode}</span>
                       <p className="map-jobs">
                         {jobLinksFor(role, city).map((job) => (
