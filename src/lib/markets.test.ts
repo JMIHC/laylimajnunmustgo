@@ -4,13 +4,12 @@ import { ROLES } from "../data/roles";
 import type { CityId } from "../data/types";
 import { citiesForRole, rolesForCity } from "./markets";
 
-const CITY_IDS: CityId[] = ["sf", "monterey", "vancouver", "victoria"];
+const CITY_IDS: CityId[] = ["monterey", "vancouver", "victoria"];
 
 describe("cities", () => {
-  it("lists the four west-coast markets", () => {
+  it("lists the three west-coast markets", () => {
     expect(CITIES.map((c) => c.id)).toEqual(CITY_IDS);
     expect(CITIES.map((c) => c.region)).toEqual([
-      "California",
       "California",
       "British Columbia",
       "British Columbia",
@@ -19,23 +18,23 @@ describe("cities", () => {
 });
 
 describe("role markets", () => {
-  it("puts every role on at least one of sf or vancouver", () => {
+  it("puts every role on at least one remaining city", () => {
     for (const role of ROLES) {
       expect(
-        role.markets.includes("sf") || role.markets.includes("vancouver"),
+        role.markets.some((id) => CITY_IDS.includes(id)),
         role.title,
       ).toBe(true);
     }
   });
 
-  it("keeps agency-owner and trial-tech shops off Monterey and Victoria", () => {
+  it("keeps agency-owner and trial-tech shops on Vancouver only", () => {
     const shops = ROLES.filter((r) =>
       r.title === "Court reporting agency owner" ||
       r.title === "Trial presentation & litigation support",
     );
     expect(shops).toHaveLength(2);
     for (const role of shops) {
-      expect(role.markets).toEqual(["sf", "vancouver"]);
+      expect(role.markets).toEqual(["vancouver"]);
     }
   });
 
@@ -96,9 +95,9 @@ describe("citiesForRole", () => {
     );
   });
 
-  it("returns only the large markets for shop roles", () => {
+  it("returns only Vancouver for shop roles", () => {
     const role = ROLES.find((r) => r.title === "Court reporting agency owner");
     expect(role).toBeTruthy();
-    expect(citiesForRole(role!).map((c) => c.id)).toEqual(["sf", "vancouver"]);
+    expect(citiesForRole(role!).map((c) => c.id)).toEqual(["vancouver"]);
   });
 });
