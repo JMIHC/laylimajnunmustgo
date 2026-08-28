@@ -117,7 +117,9 @@ h1 em { font-style: italic; font-weight: 400; color: var(--legal); }
 .deck:focus-visible,
 .card:focus-visible,
 .card a:focus-visible,
-.back:focus-visible {
+.back:focus-visible,
+.site-nav-links a:focus-visible,
+.map-city:focus-visible {
   outline: 3px solid var(--rule);
   outline-offset: 3px;
 }
@@ -314,4 +316,173 @@ footer .stamp {
   .card,
   .avatar .cue { transition: none; }
   .card:hover { transform: none; }
+}
+
+.site-nav {
+  background: var(--paper);
+  border-bottom: 1px solid #c9d0d8;
+}
+.site-nav-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px 28px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+.site-nav-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.site-nav-links {
+  display: flex;
+  gap: 22px;
+}
+.site-nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-soft);
+  padding-bottom: 2px;
+  border-bottom: 1.5px solid transparent;
+}
+.site-nav-links a:hover { color: var(--ink); }
+.site-nav-links a.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.map-header { padding: 36px 0 20px; }
+.map-header h1 { margin-top: 12px; max-width: 16ch; }
+.map-kicker,
+.map-panel-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+  gap: 28px;
+  align-items: start;
+  padding-bottom: 16px;
+}
+.map-canvas {
+  min-height: 420px;
+  height: min(70vh, 640px);
+  background: var(--page);
+  border: 1px solid #d5dae0;
+  box-shadow: 0 1px 0 #cfd4da;
+  overflow: hidden;
+}
+.map-leaflet,
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  background: #e4e8ec;
+  font-family: var(--font-ui);
+}
+.map-leaflet[hidden] { display: none; }
+.map-svg { width: 100%; height: 100%; min-height: 420px; display: block; }
+.leaflet-bar {
+  border: 1px solid #c9d0d8 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.leaflet-control-attribution {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(252, 252, 250, 0.88) !important;
+}
+.map-panel {
+  background: var(--page);
+  border: 1px solid #d5dae0;
+  box-shadow: 0 1px 0 #cfd4da;
+  padding: 18px 18px 14px;
+  min-height: 420px;
+}
+.map-cities,
+.map-roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.map-cities { margin-bottom: 18px; }
+.map-cities li + li { border-top: 1px solid #e4e8ec; }
+.map-city {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  background: none;
+  border: 0;
+  border-left: 2px solid transparent;
+  padding: 10px 4px 10px 8px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+}
+.map-city:hover { background: #f4f6f8; }
+.map-city[aria-pressed="true"] {
+  border-left-color: var(--steno);
+  background: #f4f6f8;
+}
+.map-city-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+}
+.map-city-region {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.map-roles-block { border-top: 1.5px solid var(--ink); padding-top: 14px; }
+.map-roles li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+  border-bottom: 1px dashed #c9d0d8;
+}
+.map-roles a {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.map-roles a:hover { text-decoration: underline; }
+.map-roles span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.map-hint {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+@media (max-width: 800px) {
+  .map-layout { grid-template-columns: 1fr; }
+  .map-canvas { height: 420px; }
+  .map-panel { min-height: 0; }
+}
+
+@media (max-width: 640px) {
+  .site-nav-inner { padding-top: 10px; padding-bottom: 10px; }
+  .map-header { padding: 24px 0 16px; }
 }
