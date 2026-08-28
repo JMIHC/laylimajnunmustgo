@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { RequireAuth } from "./components/RequireAuth";
 import { Home } from "./routes/Home";
 import { Login } from "./routes/Login";
+import { MapPage } from "./routes/MapPage";
 import { RolePage } from "./routes/RolePage";
 
 const router = createBrowserRouter([
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", Component: Home },
       { path: "/role/:slug", Component: RolePage },
+      { path: "/map", Component: MapPage },
     ],
   },
 ]);
