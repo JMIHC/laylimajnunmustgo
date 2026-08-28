@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - tmp/new-avatars/**
+      - tmp/new-avatars/READY
 
 permissions:
   contents: write
