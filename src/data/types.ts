@@ -4,7 +4,7 @@ export type DeckId = "past" | "next";
 
 export type WorkMode = "Remote" | "Hybrid" | "On-site";
 
-export type CityId = "sf" | "monterey" | "vancouver" | "victoria";
+export type CityId = "monterey" | "vancouver" | "victoria";
 
 export type HairStyle = "crop" | "short" | "bob" | "wave" | "bun" | "gray";
 
