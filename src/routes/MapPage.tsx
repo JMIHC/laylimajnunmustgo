@@ -6,6 +6,7 @@ import { SiteNav } from "../components/SiteNav";
 import { CITIES } from "../data/cities";
 import { ROLES } from "../data/roles";
 import type { CityId } from "../data/types";
+import { jobLinksFor } from "../lib/jobs";
 import { rolesForCity } from "../lib/markets";
 import { slugFromTitle } from "../lib/slug";
 
@@ -20,9 +21,9 @@ export function MapPage() {
       <div className="wrap">
         <header className="map-header">
           <p className="map-kicker">Typical markets we assign</p>
-          <h1>Four cities on the coast.</h1>
+          <h1>Three cities on the coast.</h1>
           <p className="lede">
-            Not live job listings. These are the markets we usually cover: two in California, two
+            Not live job listings. These are the markets we usually cover: one in California, two
             in British Columbia. Click a pin or a city to see the roles we assign there.
           </p>
         </header>
@@ -55,6 +56,18 @@ export function MapPage() {
                     <li key={role.title}>
                       <Link to={`/role/${slugFromTitle(role.title)}`}>{role.title}</Link>
                       <span>{role.mode}</span>
+                      <p className="map-jobs">
+                        {jobLinksFor(role, city).map((job) => (
+                          <a
+                            key={job.href}
+                            href={job.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {job.label}
+                          </a>
+                        ))}
+                      </p>
                     </li>
                   ))}
                 </ul>
