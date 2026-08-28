@@ -17,13 +17,57 @@ function linkedInLocation(id: City["id"]): string {
   }
 }
 
-/** Indeed in Monterey; Job Bank (title query) in Vancouver / Victoria. */
+const CANADA_JOB_QUERY: Record<string, string> = {
+  depo: "court reporting agency",
+  agency: "court reporting agency",
+  scopist: "court reporting agency",
+  voice: "court reporting agency",
+  expert: "court reporting agency",
+  catsoft: "court reporting agency",
+  instructor: "court reporting college",
+  cart: "captioning",
+  broadcast: "captioning",
+  event: "captioning",
+  access: "captioning",
+  hearing: "Hansard",
+  video: "legal videographer",
+  legaltrans: "court transcription",
+  health: "medical transcription",
+  trial: "litigation support",
+  courtadmin: "court services",
+  paralegal: "paralegal",
+  legalops: "legal operations",
+  lawlib: "law librarian",
+  foia: "access to information",
+  contract: "contract specialist",
+  cs: "legal technology",
+  asr: "speech recognition",
+  techwriter: "technical writer",
+  ea: "executive assistant",
+  speaker: "court reporting",
+  rim: "records management",
+  oralhist: "oral history",
+  claims: "claims examiner",
+  grant: "grant writer",
+};
+
+const CANADA_JOB_FALLBACK = "court reporting agency";
+
+/** Canadian employer / place phrase for Job Bank — never the US title. */
+export function canadaJobQuery(role: Role): string {
+  return CANADA_JOB_QUERY[role.scene] ?? CANADA_JOB_FALLBACK;
+}
+
+function canadaLocation(id: City["id"]): string {
+  return id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
+}
+
+/** Indeed in Monterey; Job Bank (Canadian employer query) in Vancouver / Victoria. */
 export function primaryJobHref(role: Role, city: City): string {
   if (city.id === "monterey") {
     return indeedJobsSearch(role.title, "Monterey, CA");
   }
-  const location = city.id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
-  return jobBankSearch(role.title, location);
+  return jobBankSearch(canadaJobQuery(role), canadaLocation(city.id));
 }
 
 export function jobLinksFor(role: Role, city: City): { label: string; href: string }[] {
@@ -40,9 +84,11 @@ export function jobLinksFor(role: Role, city: City): { label: string; href: stri
     ];
   }
 
-  const location = city.id === "vancouver" ? "Vancouver, BC" : "Victoria, BC";
   return [
     linkedIn,
-    { label: "Job Bank (outside Canada)", href: jobBankSearch(role.title, location) },
+    {
+      label: "Job Bank (outside Canada)",
+      href: jobBankSearch(canadaJobQuery(role), canadaLocation(city.id)),
+    },
   ];
 }
