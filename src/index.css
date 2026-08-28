@@ -486,3 +486,19 @@ footer .stamp {
   .site-nav-inner { padding-top: 10px; padding-bottom: 10px; }
   .map-header { padding: 24px 0 16px; }
 }
+
+.map-jobs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 2px 0 0;
+}
+.map-jobs a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.map-jobs a:hover { text-decoration: underline; color: var(--ink); }
