@@ -1,5 +1,7 @@
 export type GroupId = "steno" | "legal" | "beyond";
 
+export type DeckId = "past" | "next";
+
 export type WorkMode = "Remote" | "Hybrid" | "On-site";
 
 export type HairStyle = "crop" | "short" | "bob" | "wave" | "bun" | "gray";
@@ -12,6 +14,7 @@ export interface AvatarSpec {
 
 export interface Role {
   g: GroupId;
+  deck: DeckId;
   title: string;
   mode: WorkMode;
   remote: boolean;

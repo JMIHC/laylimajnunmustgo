@@ -1,4 +1,4 @@
-import type { GroupId, Role } from "../data/types";
+import type { DeckId, GroupId, Role } from "../data/types";
 
 export type GroupFilter = "all" | GroupId;
 
@@ -8,6 +8,11 @@ export function roleMatches(role: Role, group: GroupFilter, remoteOnly: boolean)
   return groupOk && remoteOk;
 }
 
-export function filterRoles(roles: Role[], group: GroupFilter, remoteOnly: boolean): Role[] {
-  return roles.filter((role) => roleMatches(role, group, remoteOnly));
+export function filterRoles(
+  roles: Role[],
+  deck: DeckId,
+  group: GroupFilter,
+  remoteOnly: boolean,
+): Role[] {
+  return roles.filter((role) => role.deck === deck && roleMatches(role, group, remoteOnly));
 }
